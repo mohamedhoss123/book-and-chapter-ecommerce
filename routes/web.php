@@ -1,10 +1,19 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\Admin;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+Route::domain('admin.localhost')->group(function () {
+    Route::middleware(Admin::class)->group(function () {
+        Route::get('/', [AdminController::class, 'index'])->name('admin.home');
+    });
+    Route::get('/login',[AdminController::class, 'login'])->name('admin.login');
+    Route::post('/login',[AdminController::class, 'login_submit'])->name('admin.login_submit');
 
+});
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -23,5 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 require __DIR__.'/auth.php';
