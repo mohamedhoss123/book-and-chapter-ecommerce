@@ -1,7 +1,10 @@
+import AdminLayout from '@/Layouts/Admin.Layout'
 import React from 'react'
 
 export default function Customers() {
   return (
-    <div>Customers</div>
+    <AdminLayout>
+      <div>Customers</div>
+    </AdminLayout>
   )
 }

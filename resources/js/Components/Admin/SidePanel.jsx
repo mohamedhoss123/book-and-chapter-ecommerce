@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react'
 import React from 'react'
 
 export default function SidePanel() {
@@ -7,36 +8,36 @@ export default function SidePanel() {
             <h3 className="text-lg font-bold">Dashboard</h3>
             <ul className="mt-4 space-y-1">
                 <li>
-                    <a
+                    <Link
                         href="/dashboard"
                         className="block px-2 py-1 hover:bg-gray-100 rounded"
                     >
                         Overview
-                    </a>
+                    </Link>
                 </li>
                 <li>
-                    <a
+                    <Link
                         href="/products"
                         className="block px-2 py-1 hover:bg-gray-100 rounded"
                     >
                         Products
-                    </a>
+                    </Link>
                 </li>
                 <li>
-                    <a
+                    <Link
                         href="/orders"
                         className="block px-2 py-1 hover:bg-gray-100 rounded"
                     >
                         Orders
-                    </a>
+                    </Link>
                 </li>
                 <li>
-                    <a
+                    <Link
                         href="/customers"
                         className="block px-2 py-1 hover:bg-gray-100 rounded"
                     >
                         Customers
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </aside>
