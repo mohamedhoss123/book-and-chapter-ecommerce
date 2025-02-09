@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
+
 class AdminSeeder extends Seeder
 {
     /**
@@ -16,7 +15,8 @@ class AdminSeeder extends Seeder
         $obj = new Admin();
         $obj->name = 'Admin';
         $obj->email = 'admin@localhost';
-        $obj->password = Hash::make('admin');
+        $obj->password = 'admin';
+        $obj->email_verified_at = now();
         $obj->save();
     }
 }
