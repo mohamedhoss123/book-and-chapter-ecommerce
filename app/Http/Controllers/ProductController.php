@@ -37,28 +37,33 @@ class ProductController extends Controller
         }
 
         $product = Product::create($data);
-        return redirect()->route('admin.product.create', compact('product'));
+        return redirect()->route('admin.product.show', $product->id);
     }
 
-    public function show(Product $product)
+    public function show(int $product)
     {
-        return view('products.show', compact('product'));
+        $product = Product::where('id', $product)->first();
+        if (!$product) {
+            return abort(404);
+        }
+        return Inertia::render('Admin/Products/show', compact('product'));
     }
 
-    public function edit(Product $product)
+    public function edit(int $product)
     {
-        return view('products.edit', compact('product'));
+        $product = Product::where('id', $product)->first();
+        return Inertia::render('Admin/Products/edit', compact('product'));
     }
 
     public function update(Request $request, Product $product)
     {
         $product->update($request->all());
-        return redirect()->route('products.index');
+        return redirect()->route('admin.product.index');
     }
 
-    public function destroy(Product $product)
+    public function destroy(int $product)
     {
-        $product->delete();
-        return redirect()->route('products.index');
+        Product::destroy($product);
+        return redirect()->route('admin.product.index');
     }
 }
