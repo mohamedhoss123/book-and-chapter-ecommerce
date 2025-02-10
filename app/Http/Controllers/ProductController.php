@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -12,12 +13,12 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::paginate(15);
-        return Inertia::render('Admin/Orders/index', $products);
+        return Inertia::render('Admin/Products/index', $products);
     }
 
     public function create()
     {
-        return view('products.create');
+        return Inertia::render('Admin/Products/create');
     }
 
     public function store(Request $request)
@@ -26,11 +27,17 @@ class ProductController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required',
-            'quantity' => 'required',
+            'stock' => 'required',
+            'image' => 'required|mimes:jpg,png,pdf',
 
         ]);
+        if ($request->hasFile('image')) {
+
+            $data['image'] = Storage::disk('s3')->put('/', $request->file("image"));
+        }
+
         $product = Product::create($data);
-        return redirect()->route('products.create');
+        return redirect()->route('admin.product.create', compact('product'));
     }
 
     public function show(Product $product)

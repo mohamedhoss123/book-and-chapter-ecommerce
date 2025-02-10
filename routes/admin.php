@@ -14,6 +14,11 @@ Route::middleware(Admin::class)->group(function () {
 
     Route::prefix("products")->group(function () {
         Route::get("/", [ProductController::class, 'index'])->name('admin.product');
+        Route::get("/create", [ProductController::class, 'create'])->name('admin.product.create');
+        Route::post("/create", [ProductController::class, 'store'])->name('admin.product.store');
+        Route::get("/edit/{id}", [ProductController::class, 'edit'])->name('admin.product.edit');
+        Route::post("/edit/{id}", [ProductController::class, 'update'])->name('admin.product.update');
+        Route::get("/delete/{id}", [ProductController::class, 'destroy'])->name('admin.product.destroy');
     });
     Route::get('/customers', [AdminController::class, 'customers'])->name('admin.customers');
     Route::get('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
