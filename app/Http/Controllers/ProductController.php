@@ -10,9 +10,15 @@ use Inertia\Inertia;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::paginate(15);
+        $products = [];
+        $query = $request->input("q");
+        if ($query) {
+            $products = Product::where("name", "like", "%$query%")->paginate(15);
+        } else {
+            $products = Product::paginate(15);
+        }
         return Inertia::render('Admin/Products/index', ["products" => $products]);
     }
 

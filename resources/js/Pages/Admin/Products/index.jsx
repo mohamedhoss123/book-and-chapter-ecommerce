@@ -1,18 +1,24 @@
 import { Button } from '@/components/ui/button'
 import AdminLayout from '@/Layouts/Admin.Layout'
-import { Link } from '@inertiajs/react'
-import React, { useEffect } from 'react'
+import { Link, router } from '@inertiajs/react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Table } from '@/components/ui/table'
+import { Input } from '@/components/ui/input'
 
 
 export default function index({ products }) {
-    useEffect(() => {
-        console.log(products)
-    })
+    const [data, setData] = useState("")
+    function handel() {
+        router.get(route("admin.product.index"), { q: data })
+    }
     return (
         <AdminLayout>
             <div className='flex flex-col'>
-                <div className='flex w-full justify-end pr-20 mt-7'>
+                <div className='flex w-full justify-around pr-20 mt-7'>
+                    <div className='flex w-[400px] justify-between'>
+                        <Input type='text' placeholder='search' onChange={(e) => setData(e.target.value)} className="w-[300px]" />
+                        <Button onClick={handel}>submit</Button>
+                    </div>
                     <Button><Link href="/products/create">add product +</Link></Button>
                 </div>
                 <div className='mt-4'>
