@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminCustomer;
 use App\Http\Controllers\ProductController;
 use App\Http\Middleware\Admin;
 
@@ -21,7 +22,9 @@ Route::middleware(Admin::class)->group(function () {
         Route::get("/delete/{id}", [ProductController::class, 'destroy'])->name('admin.product.destroy');
         Route::get("/show/{id}", [ProductController::class, 'show'])->name('admin.product.show');
     });
-    Route::get('/customers', [AdminController::class, 'customers'])->name('admin.customers');
+    Route::prefix("customers")->group(function () {
+        Route::get('/', [AdminCustomer::class, 'index'])->name('admin.customers.index');
+    });
     Route::get('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 });
 Route::get('/login', [AdminAuthController::class, 'login'])->name('admin.login');
